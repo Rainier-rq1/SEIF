@@ -176,7 +176,7 @@ The following figure shows the overall SEIF pipeline. SEIF alternates between In
 </p>
 
 <p align="center">
-  <b>Figure 1.</b> Overview of SEIF. The Instructor learns to generate increasingly challenging multi-constraint instructions, while the Follower learns to satisfy them. The latest Follower serves as the evaluator for training the next Instructor.
+  <b>Figure 2.</b> Overview of SEIF. The Instructor learns to generate increasingly challenging multi-constraint instructions, while the Follower learns to satisfy them. The latest Follower serves as the evaluator for training the next Instructor.
 </p>
 
 The following diagram illustrates the complete iterative loop using Qwen2.5-7B-Instruct as an example.
