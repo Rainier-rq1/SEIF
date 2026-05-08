@@ -1,0 +1,99 @@
+data:
+  train_files: data/Self-IF-Self-QWEN-7B/q_Tk.parquet
+  val_files: data/test.parquet
+  prompt_key: prompt
+  max_prompt_length: 2048
+  max_response_length: 8192
+  rollout_batch_size: 384
+  shuffle: true
+  seed: 1
+  max_pixels: 4194304
+  min_pixels: 262144
+  video_fps: 2.0
+
+algorithm:
+  adv_estimator: grpo
+  kl_coef: 1.0e-2
+  online_filtering: false  # dapo filter groups
+  filter_key: overall
+  filter_low: 0.01
+  filter_high: 0.99
+  disable_kl: false
+  use_kl_loss: true
+  kl_penalty: low_var_kl
+  
+
+
+worker:
+  actor:
+    global_batch_size: 96
+    micro_batch_size_per_device_for_update: 4
+    micro_batch_size_per_device_for_experience: 8
+    max_grad_norm: 1.0
+    use_kl_loss: true 
+    kl_penalty: low_var_kl
+    padding_free: true
+    model:
+      model_path: Qwen/Qwen2.5-7B-Instruct
+      enable_gradient_checkpointing: true
+      trust_remote_code: false
+      freeze_vision_tower: false
+    optim:
+      lr: 1.0e-6
+      weight_decay: 1.0e-2
+      lr_warmup_ratio: 0.0
+    fsdp:
+      enable_full_shard: true
+      enable_cpu_offload: false
+      enable_rank0_init: true
+    offload:
+      offload_params: false
+      offload_optimizer: false
+
+  rollout:
+    temperature: 1.0
+    n: 5
+    gpu_memory_utilization: 0.8
+    enforce_eager: false
+    enable_chunked_prefill: false
+    max_num_batched_tokens : 16000
+    tensor_parallel_size: 2
+    limit_images: 0
+    val_override_config:
+      temperature: 0.5
+      n: 1
+
+  ref:
+    fsdp:
+      enable_full_shard: true
+      enable_cpu_offload: true
+      enable_rank0_init: true
+    offload:
+      offload_params: false
+
+  reward:
+    reward_type: batch
+    reward_function: ./examples/reward_function/instruction_reward.py:instruction_compute_score
+    
+
+trainer:
+  total_epochs: 3 (Turn1) or 1 (Turn2/Turn3)
+  max_try_make_batch: 20
+  logger: ["wandb"]
+  project_name: Follower-Turn-k-QWEN7B
+  experiment_name: qwen2_5_7b
+  n_gpus_per_node: 8
+  nnodes: 1
+  val_freq: 13
+  val_before_train: true
+  val_only: false
+  val_generations_to_log: 0   
+  save_freq: 13
+  save_checkpoint_path: path to save turn-k follower checkpoint
+  load_checkpoint_path: null
+
+
+
+
+
+  
