@@ -7,9 +7,18 @@ This repository implements **SEIF**, an iterative self-training framework for in
 
 The training process alternates between improving the Instructor and the Follower, enabling both models to progressively evolve over multiple rounds.
 
+<p align="center">
+  <img src="assets/comp.png" width="900">
+</p>
+
+<p align="center">
+  <b>Figure 1.</b> Comparison of training paradigms for instruction-following. Existing methods either rely on external supervision or improve through self-play with instructions of static difficulty, which cannot evolve as the model's capabilities improve. In contrast, SEIF establishes a closed self-evolution loop during training, in which the Instructor generates more challenging instructions, and the Follower learns to follow the new instructions, enabling co-evolution.
+</p>
+
 ---
 
 ## Table of Contents
+
 
 1. [Project Overview](#project-overview)
 2. [Directory Structure](#directory-structure)
