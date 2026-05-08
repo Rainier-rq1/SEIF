@@ -160,6 +160,16 @@ The generated parquet files are then used as training data for the Follower.
 
 ## 4. Iterative Training Workflow
 
+The following figure shows the overall SEIF pipeline. SEIF alternates between Instructor optimization and Follower optimization. In each round, the Instructor generates multi-constraint instructions, while the Follower learns to follow these instructions. The updated Follower is then reused as the evaluator for the next Instructor round, forming a self-evolving training loop.
+
+<p align="center">
+  <img src="assets/method.png" width="850">
+</p>
+
+<p align="center">
+  <b>Figure 1.</b> Overview of SEIF. The Instructor learns to generate increasingly challenging multi-constraint instructions, while the Follower learns to satisfy them. The latest Follower serves as the evaluator for training the next Instructor.
+</p>
+
 The following diagram illustrates the complete iterative loop using Qwen2.5-7B-Instruct as an example.
 
 ```text
