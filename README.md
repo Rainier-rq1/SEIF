@@ -25,11 +25,6 @@ For round `T` (T ≥ 1):
 | 2    | `I_2` from `I_1`, eval `F_1` | `F_2` from `F_1` | `q_T2.parquet` |
 | 3    | `I_3` from `I_2`, eval `F_2` | `F_3` from `F_2` | `q_T3.parquet` |
 
-## Setup
-
-- Install `verl`, `vllm`, `ray` and other deps (see `pyproject.toml` / `Dockerfile`).
-- Prepare seed data at `data/seed.parquet` and a base model (e.g. `Qwen/Qwen2.5-7B-Instruct`).
-- Allocate GPUs for both vLLM serving and training.
 
 ## Switching between Instructor and Follower
 
